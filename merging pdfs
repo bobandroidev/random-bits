@@ -1,0 +1,23 @@
+#original source: http://www.boxcontrol.net/merge-pdf-files-with-under-10-lines-in-python.html#.VZvHovmqqko
+#download pypdf2 from http://mstamy2.github.io/PyPDF2/
+
+import os
+from PyPDF2 import PdfFileMerger, PdfFileReader 
+
+files_dir = "F:\\pdfs"                        #directory whee the pdfs are stored
+pdf_files = []                                #list of pdf files to be merged
+for i in os.listdir(files_dir):               #select all the pdfs in the directory
+    if i.endswith("pdf"):
+        pdf_files.append(i)
+        
+merger = PdfFileMerger()                      #create a pdf merger object
+
+for file_name in pdf_files:                   #read each pdf and append it to merger
+    merger.append(PdfFileReader(os.path.join(files_dir,file_name), "rb"))
+    
+merged_name = raw_input("Enter the filename of the merged file with .pdf extension:") #give name to merged pdf
+merger.write(os.path.join(files_dir,merged_name))   #write appended pdf set to file
+
+print "File merging completed \n The files merged were: \n " 
+for i in pdf_files:
+    print (i)
